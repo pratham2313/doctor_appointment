@@ -1,9 +1,17 @@
 const express = require('express');
-
 const appoinfomodel = require('./models/appoinfo');
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
-mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
+//mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
+//mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
+const mongoUrl = "mongodb+srv://nill:nill4077@remotedoctorconsulting.z9hstsz.mongodb.net/remotedoctorconsulting?retryWrites=true&w=majority";
+
+mongoose.set("strictQuery", false);
+
+mongoose.connect(mongoUrl, {
+    useNewUrlParser: true
+}).then(() => { console.log("Connected to database"); })
+    .catch(e => console.log(e));
 
 
 
@@ -18,7 +26,7 @@ app.use(cors({
 }));
 
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     res.status(200).send({
         message: "server running successfully",
     });
@@ -32,9 +40,10 @@ app.get('/', (req, res) => {
         date: "10-12-2020",
         time: "4:50pm",
     });
-    appodetails.save(function (err, req1) {
+    await appodetails.save(function (err, req1) {
         if (err) {
             console.log("error accour !");
+            console.log(err);
         }
         else {
             console.log("details added");
