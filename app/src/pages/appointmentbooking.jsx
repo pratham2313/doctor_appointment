@@ -5,7 +5,8 @@ import Header from './Header';
 import Footer from './Footer';
 import Select from "react-select";
 import axios, { isCancel, AxiosError } from 'axios';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //pehela pehela pyar he.....
 
@@ -172,8 +173,10 @@ function Appointmentbooking() {
 
   const submit = async e => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/addappoinfo", appodetails);
-    alert('data inserted');
+    await axios.post("http://localhost:8080/addappoinfo", appodetails).then(() => {
+      toast.success("Your Appointment Successfully booked");
+    });
+
   }
 
 
@@ -303,7 +306,7 @@ function Appointmentbooking() {
         </div>
       </div>
       <Footer />
-
+      <ToastContainer />
     </div>
   )
 }

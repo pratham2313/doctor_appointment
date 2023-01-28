@@ -1,11 +1,50 @@
 // import img1 from '../images/stath.jpg';
-import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 // import css from '../images/patientreg.css';
+import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useState, useEffect } from "react";
+import axios, { isCancel, AxiosError } from 'axios';
+function Patientreg() {
+    const [patientdetails, setdetails] = useState({
+        fullname: "", phonenumber: "", email: "", password: "", confirmpassword: "",
+    })
+    const { fullname, phonenumber, email, password, confirmpassword } = patientdetails;
+    const handleInput = (e) => {
+        setdetails({ ...patientdetails, [e.target.name]: e.target.value });
+    }
+    const submit = async e => {
+        console.log("submit call");
+        e.preventDefault();
+        if (patientdetails.password === patientdetails.confirmpassword) {
+            await axios.post("http://localhost:8080/register", patientdetails).then((res) => {
+                //console.log(res);
+                if (res.data.message === "ok") {
+                    toast.success("registration Successful");
+                    toast.info("Now You can login with your email and pass");
+                }
+                if (res.data.message === "error") {
+                    toast.error("Something went wrong");
+                }
+                if (res.data.message === "Exists") {
+                    toast.error("User already exist on this email");
+                }
 
 
-const Patientreg = () => {
+            });
+        }
+        else {
+            toast.error("Password doesn't match with Confirpassword");
+        }
+
+
+    }
+
+
+
+
     return (
         <div>
             <Header />
@@ -30,31 +69,31 @@ const Patientreg = () => {
                                     <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7_dtp.css" rel="stylesheet" type="text/css" />
 
                                     <div id="">
-                                        <form action="https://qupapp.us14.list-manage.com/subscribe/post?u=dd80eb08d9cc3b8010abc039f&amp;id=34a0b4f4e9" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_self">
+                                        <form >
                                             <div id="mc_embed_signup_scroll">
 
                                                 <div class="indicates-required"><span class="asterisk"></span> </div>
                                                 <div class="mc-field-group form-group">
                                                     <label for="mce-MMERGE1" class="mb-1 mt-3">Full Name </label>
-                                                    <input type="text" value="" name="MMERGE1" class="form-control" id="mce-MMERGE1" />
+                                                    <input type="text" name="fullname" value={fullname} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" />
                                                 </div>
                                                 <div class="mc-field-group size1of2 form-group">
                                                     <label for="mce-PHONE" class="mb-1 mt-3">Phone Number </label>
-                                                    <input type="text" name="PHONE" class="form-control" value="" id="mce-PHONE" />
+                                                    <input type="text" name="phonenumber" value={phonenumber} onChange={(e) => handleInput(e)} class="form-control" id="mce-PHONE" />
                                                 </div>
                                                 <div class="mc-field-group form-group">
                                                     <label for="mce-EMAIL" class="mb-1 mt-3">Email Address *<span
                                                         class="asterisk"></span></label>
-                                                    <input type="email" value="" name="EMAIL" class="email form-control"
+                                                    <input type="email" name="email" value={email} onChange={(e) => handleInput(e)} class="email form-control"
                                                         id="mce-EMAIL" required="true" />
                                                 </div>
                                                 <div class="mc-field-group form-group">
                                                     <label for="mce-MMERGE1" class="mb-1 mt-3">Password</label>
-                                                    <input type="text" value="" name="MMERGE1" class="form-control" id="mce-MMERGE1" />
+                                                    <input type="text" name="password" value={password} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" />
                                                 </div>
                                                 <div class="mc-field-group form-group">
                                                     <label for="mce-MMERGE1" class="mb-1 mt-3">Confirm Password</label>
-                                                    <input type="text" value="" name="MMERGE1" class="form-control" id="mce-MMERGE1" />
+                                                    <input type="text" name="confirmpassword" value={confirmpassword} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" />
                                                 </div>
 
                                                 {/* <div class="mc-field-group mb-5">
@@ -90,7 +129,7 @@ const Patientreg = () => {
                                                 <div class="row">
                                                     <div class=" col-2 optionalParent">
                                                         <div class="clear foot pt-4 ">
-                                                            <input type="submit" value="Submit" name="subscribe"
+                                                            <input type="submit" onClick={submit}
                                                                 id="mc-embedded-subscribe"
                                                                 class="button btn btn-primary bt mt-5 get_demo_btn" />
 
@@ -98,9 +137,11 @@ const Patientreg = () => {
                                                     </div>
                                                     <div class=" col-2 optionalParent ">
                                                         <div class="clear foot pt-4 ">
-                                                            <input type="submit" value="Login" name="subscribe"
+                                                            <input type="submit" value="Login" onClick={submit}
                                                                 id="mc-embedded-subscribe"
                                                                 class="button btn btn-primary bt mt-5 get_demo_btn" />
+                                                            {/* <button onClick={submit} class="btn btn-dark w-100 py-3" type="submit">Submit</button>
+                                                                <button onClick={submit} class="btn btn-dark w-100 py-3" type="submit">Login</button> */}
 
                                                         </div>
                                                     </div>
@@ -127,6 +168,7 @@ const Patientreg = () => {
 
             </section >
             <Footer />
+            <ToastContainer />
         </div >
 
 
@@ -135,5 +177,7 @@ const Patientreg = () => {
 
     )
 }
-
 export default Patientreg
+
+
+

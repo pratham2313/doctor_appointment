@@ -1,7 +1,9 @@
 const express = require('express');
 const appoinfomodel = require('./models/appoinfo');
+const patientregmodel = require('./models/patientreg');
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
+const bcrypt = require('bcrypt');
 //mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
 //mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
 const mongoUrl = "mongodb+srv://nill:nill4077@remotedoctorconsulting.z9hstsz.mongodb.net/remotedoctorconsulting?retryWrites=true&w=majority";
@@ -75,6 +77,37 @@ app.post('/addappoinfo', (req, res) => {
     });
 
 });
+
+
+
+
+//patient registration.....
+app.post("/register", async (req, res) => {
+    const { fullname, phonenumber, email, password } = req.body;
+    //console.log("register call");
+
+    const encryptPassword = await bcrypt.hash(password, 10);
+    try {
+        const oldUser = await patientregmodel.findOne({ email });
+        if (oldUser) {
+            //console.log("old usercall");
+            res.json({ message: "Exists" });
+        }
+        else {
+            await patientregmodel.create({
+                fullname,
+                phonenumber,
+                email,
+                password: encryptPassword,
+                role: "patient"
+            });
+            res.json({ message: "ok" });
+        }
+    } catch (error) {
+        res.json({ message: "error" });
+    }
+});
+
 
 const port = 8080
 const mode = "devlopment"
