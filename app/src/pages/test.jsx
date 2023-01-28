@@ -55,6 +55,7 @@ export default class SignUp extends Component {
                     />
                 </div>
 
+
                 <div className="mb-3">
                     <label>Email address</label>
                     <input

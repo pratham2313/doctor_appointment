@@ -35,7 +35,7 @@ function Header() {
                                     <a class="nav-link" href="#faq">FAQ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link msp_5" style={{ backgroundColor: "blue", marginLeft: "400px" }} href="doctor-home.php">I'm Doctor</a>
+                                    <a class="nav-link msp_5" style={{ backgroundColor: "blue", marginLeft: "400px" }} href="/docreg">I'm Doctor</a>
                                 </li>
                             </ul>
                         </div>

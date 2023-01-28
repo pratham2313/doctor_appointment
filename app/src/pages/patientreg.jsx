@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import axios, { isCancel, AxiosError } from 'axios';
+import { Link, useNavigate } from "react-router-dom";
 function Patientreg() {
     const [patientdetails, setdetails] = useState({
         fullname: "", phonenumber: "", email: "", password: "", confirmpassword: "",
@@ -23,7 +24,15 @@ function Patientreg() {
                 //console.log(res);
                 if (res.data.message === "ok") {
                     toast.success("registration Successful");
-                    toast.info("Now You can login with your email and pass");
+                    var i = 0;
+                    var count = 0;
+                    for (i = 0; i < 100000; i++) {
+                        count = count + 1;
+                    }
+                    if (count > 1000) {
+                        toast.info("Now You can login with your email and pass");
+                    }
+
                 }
                 if (res.data.message === "error") {
                     toast.error("Something went wrong");
@@ -41,6 +50,7 @@ function Patientreg() {
 
 
     }
+
 
 
 
@@ -75,11 +85,11 @@ function Patientreg() {
                                                 <div class="indicates-required"><span class="asterisk"></span> </div>
                                                 <div class="mc-field-group form-group">
                                                     <label for="mce-MMERGE1" class="mb-1 mt-3">Full Name </label>
-                                                    <input type="text" name="fullname" value={fullname} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" />
+                                                    <input type="text" name="fullname" value={fullname} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" required="true" />
                                                 </div>
                                                 <div class="mc-field-group size1of2 form-group">
                                                     <label for="mce-PHONE" class="mb-1 mt-3">Phone Number </label>
-                                                    <input type="text" name="phonenumber" value={phonenumber} onChange={(e) => handleInput(e)} class="form-control" id="mce-PHONE" />
+                                                    <input type="text" name="phonenumber" value={phonenumber} onChange={(e) => handleInput(e)} class="form-control" id="mce-PHONE" required="true" />
                                                 </div>
                                                 <div class="mc-field-group form-group">
                                                     <label for="mce-EMAIL" class="mb-1 mt-3">Email Address *<span
@@ -89,11 +99,11 @@ function Patientreg() {
                                                 </div>
                                                 <div class="mc-field-group form-group">
                                                     <label for="mce-MMERGE1" class="mb-1 mt-3">Password</label>
-                                                    <input type="text" name="password" value={password} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" />
+                                                    <input type="text" name="password" value={password} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" required="true" />
                                                 </div>
                                                 <div class="mc-field-group form-group">
                                                     <label for="mce-MMERGE1" class="mb-1 mt-3">Confirm Password</label>
-                                                    <input type="text" name="confirmpassword" value={confirmpassword} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" />
+                                                    <input type="text" name="confirmpassword" value={confirmpassword} onChange={(e) => handleInput(e)} class="form-control" id="mce-MMERGE1" required="true" />
                                                 </div>
 
                                                 {/* <div class="mc-field-group mb-5">
@@ -135,22 +145,23 @@ function Patientreg() {
 
                                                         </div>
                                                     </div>
-                                                    <div class=" col-2 optionalParent ">
+                                                    {/* <div class=" col-2 optionalParent ">
                                                         <div class="clear foot pt-4 ">
-                                                            <input type="submit" value="Login" onClick={submit}
+                                                            <input type="submit" value="Login" onClick={login}
                                                                 id="mc-embedded-subscribe"
                                                                 class="button btn btn-primary bt mt-5 get_demo_btn" />
-                                                            {/* <button onClick={submit} class="btn btn-dark w-100 py-3" type="submit">Submit</button>
-                                                                <button onClick={submit} class="btn btn-dark w-100 py-3" type="submit">Login</button> */}
+                                                            <button onClick={submit} class="btn btn-dark w-100 py-3" type="submit">Submit</button>
+                                                                <button onClick={submit} class="btn btn-dark w-100 py-3" type="submit">Login</button>
 
                                                         </div>
-                                                    </div>
+                                                    </div> */}
 
 
                                                 </div>
 
                                             </div>
-                                        </form>
+                                        </form><br />
+                                        <Link style={{ textDecoration: "none" }} to="/patientlogin">Already have an account?</Link>
                                     </div>
 
 

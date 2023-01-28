@@ -6,6 +6,7 @@ import Doctorreg from './pages/doctorreg';
 import Patientreg from './pages/patientreg';
 import Appointmentbooking from './pages/appointmentbooking';
 import Index from './pages/Index';
+import Patientlogin from './pages/Patientlogin';
 
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/patientreg" element={<Patientreg />} />
           <Route path='/appointment' element={<Appointmentbooking />} />
           <Route path='/index' element={<Index />} />
+          <Route path='/patientlogin' element={<Patientlogin />} />
 
 
         </Routes>
