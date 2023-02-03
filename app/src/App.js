@@ -7,8 +7,7 @@ import Patientreg from './pages/patientreg';
 import Appointmentbooking from './pages/appointmentbooking';
 import Index from './pages/Index';
 import Patientlogin from './pages/Patientlogin';
-
-
+import Main from './dashboard/main';
 
 
 function App() {
@@ -25,7 +24,8 @@ function App() {
           <Route path='/appointment' element={<Appointmentbooking />} />
           <Route path='/index' element={<Index />} />
           <Route path='/patientlogin' element={<Patientlogin />} />
-
+          <Route path='/dashmain' element={<Main />} />
+          {/* <Route path='http://localhost:5000/'/> */}
 
         </Routes>
       </BrowserRouter>

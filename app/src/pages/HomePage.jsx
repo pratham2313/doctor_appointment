@@ -25,7 +25,7 @@ const HomePage = () => {
                 </div>
             </section>
             <div class="whatsapp-cta-container">
-                <a href="https://wa.link/0do5db" target="_blank" rel="noopener noreferrer" ><i style={{ fontSize: 30 }} class="fas fa-users"></i></a>
+                <a href="/dashmain" target="_blank" rel="noopener noreferrer" ><i style={{ fontSize: 30 }} class="fas fa-users"></i></a>
             </div>
 
 

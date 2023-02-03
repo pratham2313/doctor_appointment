@@ -36,31 +36,31 @@ app.use(cors({
 }));
 
 
-app.get('/', async (req, res) => {
-    res.status(200).send({
-        message: "server running successfully",
-    });
-    var appodetails = new appoinfomodel({
-        Specialist: "Gynecology",
-        docname: "Pratham",
-        username: "Nilkanth",
-        email: "123@gmail.com",
-        phonenumber: "000000000",
-        gender: "male",
-        date: "10-12-2020",
-        time: "4:50pm",
-    });
-    await appodetails.save(function (err, req1) {
-        if (err) {
-            console.log("error accour !");
-            console.log(err);
-        }
-        else {
-            console.log("details added");
-        }
-    });
+// app.get('/', async (req, res) => {
+//     res.status(200).send({
+//         message: "server running successfully",
+//     });
+//     var appodetails = new appoinfomodel({
+//         Specialist: "Gynecology",
+//         docname: "Pratham",
+//         username: "Nilkanth",
+//         email: "123@gmail.com",
+//         phonenumber: "000000000",
+//         gender: "male",
+//         date: "10-12-2020",
+//         time: "4:50pm",
+//     });
+//     await appodetails.save(function (err, req1) {
+//         if (err) {
+//             console.log("error accour !");
+//             console.log(err);
+//         }
+//         else {
+//             console.log("details added");
+//         }
+//     });
 
-});
+// });
 app.post('/addappoinfo', (req, res) => {
     res.status(200).send({
         message: "server running successfully",
@@ -187,7 +187,7 @@ const upload = multer({
         cb(null, true);
     }
 });
-var uploadsingle = upload.single('docfile');
+
 // conn.once('open', () => {
 //     // Init stream
 //     gfs = Grid(conn.db, mongoose.mongo);
@@ -196,25 +196,35 @@ var uploadsingle = upload.single('docfile');
 // const storage = new GridFsStorage({
 //     url: mongoUrl,
 //     file: (req, file) => {
-//         return new Promise((resolve, reject) => {
-//             crypto.randomBytes(16, (err, buf) => {
-//                 if (err) {
-//                     return reject(err);
-//                 }
-//                 const filename = buf.toString('hex') + path.extname(file.originalname);
-//                 // if (ext != ".pdf") {
-//                 //     return cb(new Error("Only pdf file is allowed"));
-//                 // }
-//                 const fileInfo = {
-//                     filename: filename,
-//                     bucketName: 'uploads'
-//                 };
-//                 resolve(fileInfo);
+//         if (file.mimetype == "pdf") {
+//             return new Promise((resolve, reject) => {
+//                 crypto.randomBytes(16, (err, buf) => {
+//                     if (err) {
+//                         return reject(err);
+//                     }
+//                     // const filename = buf.toString('hex') + path.extname(file.originalname);
+//                     const filename = file.originalname;
+//                     // if (ext != ".pdf") {
+//                     //     return cb(new Error("Only pdf file is allowed"));
+//                     // }
+//                     const fileInfo = {
+//                         filename: filename,
+//                         bucketName: 'uploads'
+//                     };
+//                     resolve(fileInfo);
+//                 });
 //             });
-//         });
+
+//         }
+//         else {
+//             return reject("Only pdf file is allowed");
+//             // return (new Error("Only pdf file is allowed"));
+//         }
+
 //     }
 // });
 // const upload = multer({ storage });
+var uploadsingle = upload.single('docfile');
 
 app.post("/check", async (req, res) => {
     const { fullname, phonenumber, email, filedoc } = req.body;
@@ -242,10 +252,12 @@ app.post("/docreg", async (req, res) => {
     // }
 
     //console.log(" i am in else");
+    console.log(req.body.specialty);
     var docdetails = new docregmodel({
         fullname: req.body.fullname,
         phonenumber: req.body.phonenumber,
         email: req.body.email,
+        specialty: req.body.specialty,
         role: "Unverified Doctor",
         filedoc: req.body.filedoc
     })
@@ -295,6 +307,109 @@ app.post("/upload", (req, res) => {
 //     console.log(req.body.docfile)
 // })
 
+let fs = require('fs');
+var http = require('http');
+app.post("/getpdf", async (req, res) => {
+    const email = req.body.docmail
+    //console.log(req.body.docmail)
+    const user = await docregmodel.findOne({ email });
+
+    if (user) {
+
+
+
+        console.log("getpdf callled");
+        // var server = http.createServer(function (req, res) {
+
+
+
+        // });
+        // server.listen(3000, '127.0.0.1');
+        console.log(user.email);
+        // app.get("/readpdf", (req, res) => {
+        //     console.log(user.filedoc.name);
+        //     reader = fs.createReadStream(`uploads/${user.filedoc.name}`);
+
+        //     // Read and display the file data on console
+        //     // reader.on('data', function (chunk) {
+        //     //     console.log(chunk.toString());
+        //     // });
+        //     reader.pipe(res);
+        // })
+        reader = fs.createReadStream(`uploads/${user.filedoc.name}`);
+
+        // Read and display the file data on console
+        // reader.on('data', function (chunk) {
+        //     console.log(chunk.toString());
+        // });
+        //url = "http://localhost:8080/readpdf";
+        reader.pipe(res);
+
+
+        //server.close();
+        //console.log("server listien on 5000");
+        //res.redirect("http://localhost:5000");
+
+    }
+    // reader = fs.createReadStream(`uploads/${data.filedoc.name}`);
+    // reader.pipe(res);
+
+
+    else {
+        //res.status(200).json({ message: "no pdf" });
+        reader = fs.createReadStream(`uploads/Pratham Patel.pdf`);
+
+        // Read and display the file data on console
+        // reader.on('data', function (chunk) {
+        //     console.log(chunk.toString());
+        // });
+        console.log(reader.path);
+        reader.pipe(res);
+    }
+
+
+})
+app.get("/readpdf", (req, res) => {
+
+})
+// app.post("/getdocfile", (req, res) => {
+//     console.log("i am getdocfile");
+//     reader = fs.createReadStream(`uploads/CE_100_NIS_Lab3.pdf`);
+
+//     // Read and display the file data on console
+//     // reader.on('data', function (chunk) {
+//     //     console.log(chunk.toString());
+//     // });
+//     reader.pipe(res);
+// })
+
+// Use fs.createReadStream() method
+// to read the file
+
+
+//get doctor
+app.get("/doctor/get", (req, res) => {
+    //console.log("doctor get called");
+    docregmodel.find((err, data) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        else {
+            const docdata = data;
+
+            // docdata.map(e => {
+            //     print(e.fullname);
+            //     print(e.email);
+            //     print(e.phonenumber);
+            // })
+            res.status(200).json(data);
+            console.log(data);
+        }
+    })
+
+
+})
+
 const port = 8080
 const mode = "devlopment"
 
@@ -302,5 +417,6 @@ const mode = "devlopment"
 app.listen(port, () => {
     //console.log(`server running successfully on ${mode} mode on port ${port}`);
 });
+
 
 
