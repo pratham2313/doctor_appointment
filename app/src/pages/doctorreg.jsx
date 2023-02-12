@@ -9,7 +9,7 @@ import axios, { isCancel, AxiosError } from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 
 const Doctorreg = () => {
-  var filedetails = { email: "", file: "" }
+  //let filedetails:{email:"",file:""}
   const [patientdetails, setdetails] = useState({
     fullname: "", phonenumber: "", email: "", specialty: "", filedoc: { name: "", size: "", type: "" },
   })
@@ -20,7 +20,6 @@ const Doctorreg = () => {
   const [file, setfile] = useState();
   const handleFile = (e) => {
     setfile(e.target.files[0]);
-    filedetails.file = e.target.files[0];
 
 
   }
@@ -33,8 +32,6 @@ const Doctorreg = () => {
     filedoc.name = file.name;
     filedoc.size = file.size;
     filedoc.type = file.type;
-    filedetails.email = patientdetails.email;
-    axios.post("http://localhost:8080/testmodel", filedetails);
     axios.post("http://localhost:8080/check", patientdetails).then((res) => {
       if (res.data.message === "Exists") {
         toast.error("User already exist on this email");

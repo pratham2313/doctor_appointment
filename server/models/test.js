@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 var patientreg = new mongoose.Schema({
     email: { type: String, unique: true },
-    file: {}
+    file: []
 
 });
 

@@ -192,13 +192,13 @@ function Appointmentbooking() {
           <div class="row gx-5">
             <div class="col-lg-6 py-5">
               <div class="py-5">
-                <h1 class="display-5 text-white mb-4">We Are A Certified and Award Winning Dental Clinic You Can Trust</h1>
-                <p class="text-white mb-0">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
+                <h1 class="display-5 text-black mb-4">We Are A Certified and Award Winning Dental Clinic You Can Trust</h1>
+                <p class="text-black mb-0">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="appointment-form h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn" data-wow-delay="0.6s">
-                <h1 class="text-white mb-4">Make Appointment</h1>
+                <h1 class="text-black mb-4" style={{ color: "black" }}>Make Appointment</h1>
                 <form>
                   <div class="row g-3">
 

@@ -1,52 +1,26 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Docviewer from 'react-doc-viewer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Table = () => {
     var docpdf = { docmail: "" };
-    //var [docpdf, setdocument] = useState({ docmail: "" });
-    // var [doclist, setdoc] = useState({
-    //     fullname: "",
-    //     phonenumber: "",
-    //     email: "",
-    //     role: "",
-    //     filedoc: {
-    //         name: "",
-    //         size: "",
-    //         type: ""
-    //     }
-    // });
+    var docstatus = { doctormail: "" };
     var [doclist, setdoc] = useState([]);
+    const fetchdoctor = async () => {
+        const res = await axios.get("http://localhost:8080/doctor/get");
+        const docdata = await res.data
+        //console.log(docdata);
+        //console.log('doctors' >> docdata.fullname);
+        setdoc(docdata);
+        console.log(docdata);
+    };
     useEffect(() => {
-        const fetchdoctor = async () => {
-            // var docdata = {
-            //     fullname: "",
-            //     phonenumber: "",
-            //     email: "",
-            //     role: "",
-            //     filedoc: {
-            //         name: "",
-            //         size: "",
-            //         type: ""
-            //     }
-            // }
 
-            const res = await axios.get("http://localhost:8080/doctor/get");
-            const docdata = await res.data
-            //console.log(docdata);
-            //console.log('doctors' >> docdata.fullname);
-            setdoc(docdata);
-            console.log(docdata);
-        };
         fetchdoctor();
 
     }, []);
-
-    //const { docmail } = docpdf;
-
 
     function getdocpdf(e) {
         console.log("getdoc");
@@ -55,13 +29,40 @@ const Table = () => {
         console.log(docpdf);
         //setdocument(e);
         axios.post("http://localhost:8080/getpdf", docpdf).then((res) => {
-            if (res.data.message === "no pdf") {
-
+            if (res.data.message === "filenowread") {
+                //window.location.href = "http://localhost:8080/readpdf";
+                window.open(
+                    'http://localhost:8080/readpdf',
+                    '_blank' // <- This is what makes it open in a new window.
+                );
             }
+
             // if (res) {
             //     axios.get("http://localhost:8080/readpdf");
             // }
         })
+    }
+
+    function Changedocstatus(e) {
+        console.log("change doc");
+        //setdocument({ ...docpdf, docmail: e.target.value });
+        docstatus.doctormail = e.target.value;
+        console.log(docstatus);
+        //setdocument(e);
+        axios.post("http://localhost:8080/changestatus", docstatus).then((res) => {
+            if (res.data.message === "doctor verified") {
+                console.log("if called");
+                toast.success("doctor verified");
+                window.location.reload(true)
+            }
+            if (res.data.message === "no user") {
+                toast.error("no user found");
+            }
+        })
+
+
+
+
     }
     // function getdocpdf() {
     //     console.log("get mail called");
@@ -91,6 +92,9 @@ const Table = () => {
                                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
                                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Doc.Document</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Verified</th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delete</th>
                                                 <th class="text-secondary opacity-7"></th>
                                             </tr>
                                         </thead>
@@ -125,10 +129,30 @@ const Table = () => {
                                                                 {/* <a onClick={getdocpdf()} class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                                                     showpdf
                                                                 </a> */}
-                                                                <div class="col-12">
-                                                                    <button onClick={getdocpdf} class="btn btn-dark w-100 py-3" type="button" value={doc.email}>show pdf</button>
-                                                                </div>
+
+
+                                                                <button onClick={getdocpdf} class="btn btn-dark" type="button" value={doc.email}>show pdf</button>
+
+
+                                                                {/* <div class="col-5">
+                                                                    <button onClick={getdocpdf} class="btn btn-dark " type="button" value={doc.email}>show pdf</button>
+                                                                </div> */}
                                                             </td>
+                                                            <td class="align-middle">
+
+
+                                                                <button onClick={Changedocstatus} class="btn" value={doc.email} style={{ backgroundColor: "lightgreen", borderRadius: "20px", color: "black" }} type="button" >✔</button>
+
+
+                                                            </td>
+                                                            <td class="align-middle ml">
+
+
+                                                                <button onClick={Changedocstatus} class="btn" value={doc.email} style={{ backgroundColor: "red", borderRadius: "20px", color: "black" }} type="button" >✘</button>
+
+
+                                                            </td>
+
                                                         </tr>
                                                     </>
                                                 ))

@@ -10,8 +10,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
 const bcrypt = require('bcrypt');
-var MongoClient = require('mongodb').MongoClient;
-var testmodel = require('./models/test');
+
+const request = require('request');
 //mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
 //mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
 const mongoUrl = "mongodb+srv://nill:nill4077@remotedoctorconsulting.z9hstsz.mongodb.net/remotedoctorconsulting?retryWrites=true&w=majority";
@@ -170,58 +170,62 @@ app.post("/patientlogin", async (req, res) => {
 
 ///docreg and file upload....
 
-// const upload = multer({
-//     storage: multer.diskStorage({
-//         destination: function (req, file, cd) {
-//             cd(null, "uploads")
-//         },
-//         filename: function (req, file, cd) {
-//             cd(null, file.originalname)
-//         }
-//     }),
-//     fileFilter: function (req, file, cb) {
-//         const ext = path.extname(file.originalname);
-//         if (ext != ".pdf") {
-//             //console.log("i am in if");
-//             return cb(new Error("Only pdf file is allowed"));
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: function (req, file, cd) {
+            cd(null, "uploads")
+        },
+        filename: function (req, file, cd) {
+            cd(null, file.originalname)
+        }
+    }),
+    fileFilter: function (req, file, cb) {
+        const ext = path.extname(file.originalname);
+        if (ext != ".pdf") {
+            //console.log("i am in if");
+            return cb(new Error("Only pdf file is allowed"));
 
-//         }
-//         cb(null, true);
-//     }
-// });
-
-conn.once('open', () => {
-    // Init stream
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('uploads');
-});
-const storage = new GridFsStorage({
-    url: mongoUrl,
-    file: (req, file) => {
-
-        return new Promise((resolve, reject) => {
-            crypto.randomBytes(16, (err, buf) => {
-                if (err) {
-                    return reject(err);
-                }
-                // const filename = buf.toString('hex') + path.extname(file.originalname);
-                const filename = file.originalname;
-                // if (ext != ".pdf") {
-                //     return cb(new Error("Only pdf file is allowed"));
-                // }
-                const fileInfo = {
-                    filename: filename,
-                    bucketName: 'uploads'
-                };
-                resolve(fileInfo);
-            });
-        });
-
-
-
+        }
+        cb(null, true);
     }
 });
-const upload = multer({ storage });
+
+// conn.once('open', () => {
+//     // Init stream
+//     gfs = Grid(conn.db, mongoose.mongo);
+//     gfs.collection('uploads');
+// });
+// const storage = new GridFsStorage({
+//     url: mongoUrl,
+//     file: (req, file) => {
+//         if (file.mimetype == "pdf") {
+//             return new Promise((resolve, reject) => {
+//                 crypto.randomBytes(16, (err, buf) => {
+//                     if (err) {
+//                         return reject(err);
+//                     }
+//                     // const filename = buf.toString('hex') + path.extname(file.originalname);
+//                     const filename = file.originalname;
+//                     // if (ext != ".pdf") {
+//                     //     return cb(new Error("Only pdf file is allowed"));
+//                     // }
+//                     const fileInfo = {
+//                         filename: filename,
+//                         bucketName: 'uploads'
+//                     };
+//                     resolve(fileInfo);
+//                 });
+//             });
+
+//         }
+//         else {
+//             return reject("Only pdf file is allowed");
+//             // return (new Error("Only pdf file is allowed"));
+//         }
+
+//     }
+// });
+// const upload = multer({ storage });
 var uploadsingle = upload.single('docfile');
 
 app.post("/check", async (req, res) => {
@@ -304,46 +308,67 @@ app.post("/upload", (req, res) => {
 //     // res.json({ docfile: req.docfile });
 //     console.log(req.body.docfile)
 // })
-
+var read;
 let fs = require('fs');
-var http = require('http');
+const { url } = require('inspector');
 app.post("/getpdf", async (req, res) => {
+
     const email = req.body.docmail
     //console.log(req.body.docmail)
     const user = await docregmodel.findOne({ email });
 
     if (user) {
-        MongoClient.connect(mongoUrl, function (err, db) {
-            if (err) throw err;
-            var dbo = db.db("remotedoctorconsulting");
-            dbo.collection("uploads.chunks").findOne({}, function (err, result) {
-                if (err) throw err;
-                console.log(result);
-                //db.close();
-            });
-        });
-
+        //serverclose();
         console.log("getpdf callled");
-        // reader = fs.createReadStream(`uploads/${user.filedoc.name}`);
-        // reader.pipe(res);
+        var url = "http://localhost:8080/readpdf";
+        request(url, (error, res, body) => {
 
+            // Printing the error if occurred
+            if (error) console.log(error)
+            read = fs.createReadStream(`uploads/${user.filedoc.name}`);
+        });
+        res.status(200).json({ message: "filenowread" });
     }
 
-    else {
-        //res.status(200).json({ message: "no pdf" });
-        reader = fs.createReadStream(`uploads/Pratham Patel.pdf`);
 
-        // Read and display the file data on console
-        // reader.on('data', function (chunk) {
-        //     console.log(chunk.toString());
-        // });
-        console.log(reader.path);
-        reader.pipe(res);
+    else {
+        //res.status(200).json({ message: "no pdf" })
     }
 
 
 })
 app.get("/readpdf", (req, res) => {
+    read.pipe(res);
+})
+app.post("/changestatus", async (req, res) => {
+
+    const email = req.body.doctormail
+    try {
+        const result = await docregmodel.updateOne({ email }, {
+            $set: {
+                role: "Verified"
+            }
+        });
+        res.status(200).json({ message: "doctor verified" });
+    }
+    catch (e) {
+
+    }
+    //console.log(req.body.docmail)
+    //const user = await docregmodel.findOne({ email });
+    //console.log(email);
+
+    // if (result) {
+    //     console.log(result);
+    //     //user.updateOne({ role: "Verified" });
+    //     res.status(200).json({ message: "doctor verified" });
+    // }
+
+
+    // else {
+    //     res.status(200).json({ message: "no user" })
+    // }
+
 
 })
 // app.post("/getdocfile", (req, res) => {
@@ -362,51 +387,20 @@ app.get("/readpdf", (req, res) => {
 
 
 //get doctor
-app.get("/doctor/get", (req, res) => {
+app.get("/doctor/get", async (req, res) => {
     //console.log("doctor get called");
-    docregmodel.find((err, data) => {
+    //const unverifieddoc = await docregmodel.findOne({ role: "Unverified Doctor" });
+    docregmodel.find({ role: "Unverified Doctor" }, (err, data) => {
         if (err) {
             res.status(500).send(err);
         }
         else {
             const docdata = data;
-
-            // docdata.map(e => {
-            //     print(e.fullname);
-            //     print(e.email);
-            //     print(e.phonenumber);
-            // })
             res.status(200).json(data);
-            console.log(data);
+            //console.log(data);
         }
     })
 
-
-})
-
-
-
-
-
-
-
-
-
-
-app.post("/testmodel", (req, res) => {
-    var test = new testmodel({
-        email: req.body.email,
-        file: req.body.file
-    })
-    test.save(function (err, req1) {
-        if (err) { res.status(500).send({ message: "error" }); }
-        else {
-            res.status(200).send({ message: "ok" });
-        }
-        //res.setHeader('Content-Type', 'text/html');
-        //console.log('docreg is inserted');
-
-    })
 
 })
 
