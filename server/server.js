@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
 const bcrypt = require('bcrypt');
 //mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
-//mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
+//mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');.
 const mongoUrl = "mongodb+srv://nill:nill4077@remotedoctorconsulting.z9hstsz.mongodb.net/remotedoctorconsulting?retryWrites=true&w=majority";
 
 mongoose.set("strictQuery", false);
