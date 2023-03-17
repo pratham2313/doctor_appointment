@@ -1,7 +1,7 @@
 import React from 'react'
 import img1 from '../assets/img/images.png';
 
-function Header() {
+function header_doc() {
     return (
         <div>
             <header>
@@ -26,7 +26,7 @@ function Header() {
                                     <a class="nav-link" href="/appointment">Book Doctor</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/patientdashboard">Profile</a>
+                                    <a class="nav-link" href="/card">Profile</a>
                                 </li>
                                 {/* <li class="nav-item">
                                     <a class="nav-link" href="#specialties">Specialties</a>
@@ -35,7 +35,7 @@ function Header() {
                                     <a class="nav-link" href="#faq">FAQ</a>
                                 </li> */}
                                 <li class="nav-item">
-                                    <a class="nav-link msp_5" style={{ backgroundColor: "blue", marginLeft: "400px" }} href="/docreg">I'm Doctor</a>
+                                    <a class="nav-link msp_5" style={{ backgroundColor: "blue", marginLeft: "400px" }} href="/patientreg">I'm Patient</a>
                                 </li>
                             </ul>
                         </div>
@@ -47,4 +47,4 @@ function Header() {
     )
 }
 
-export default Header
+export default header_doc

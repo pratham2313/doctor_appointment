@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
 * {
     box-sizing: border-box;
     outline: none;
@@ -82,7 +83,7 @@ a:active {
 }
 
 button {
-    outline: 0!important
+    outline: 0 !important
 }
 
 p {
@@ -144,13 +145,14 @@ select:focus {
 }
 
 .shadow {
-    box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, .15)!important;
+    box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, .15) !important;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -361,7 +363,7 @@ background-clip: text;
     z-index: 1030;
     width: 100%;
     background-color: #fff;
-    box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, .15)!important;
+    box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, .15) !important;
     padding: 0;
 }
 
@@ -481,9 +483,9 @@ section.home-banner {
     right: 14%;
     top: 17%;
     z-index: 0;
-    background-image: -moz-linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
-    background-image: -webkit-linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
-    background-image: linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: -moz-linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: -webkit-linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
 }
 
 .bck-ring3 {
@@ -496,9 +498,9 @@ section.home-banner {
     top: 14%;
     z-index: -1;
     z-index: -1;
-    background-image: -moz-linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
-    background-image: -webkit-linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
-    background-image: linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: -moz-linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: -webkit-linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
     filter: blur(35px);
     -webkit-filter: blur(35px);
 }
@@ -512,9 +514,9 @@ section.home-banner {
     right: 35%;
     top: 65%;
     z-index: -1;
-    background-image: -moz-linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
-    background-image: -webkit-linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
-    background-image: linear-gradient( 180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: -moz-linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: -webkit-linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
+    background-image: linear-gradient(180deg, hsl(174deg 96% 55%) 0%, hsl(174deg 91% 53%) 1%, hsl(174deg 86% 52%) 3%, hsl(174deg 82% 51%) 4%, hsl(174deg 80% 49%) 6%, hsl(174deg 80% 48%) 8%, hsl(175deg 80% 46%) 10%, hsl(175deg 80% 45%) 12%, hsl(175deg 80% 43%) 14%, hsl(175deg 80% 42%) 17%, hsl(176deg 80% 40%) 19%, hsl(176deg 80% 38%) 22%, hsl(176deg 80% 36%) 25%, hsl(177deg 80% 34%) 29%, hsl(178deg 80% 32%) 33%, hsl(178deg 81% 30%) 37%, hsl(179deg 81% 28%) 42%, hsl(181deg 81% 26%) 47%, hsl(183deg 82% 23%) 54%, hsl(186deg 84% 21%) 63%, hsl(192deg 87% 18%) 74%, hsl(203deg 100% 14%) 100%);
     filter: blur(35px);
     -webkit-filter: blur(35px);
 }
@@ -795,10 +797,12 @@ img.img-fluid.icon_img_state {
 }
 
 @keyframes square {
+
     0%,
     100% {
         transform: translateY(-20px);
     }
+
     50% {
         transform: translateY(20px);
     }
@@ -925,7 +929,7 @@ img.img-fluid.icon_img_state {
     background: linear-gradient(135deg, hsla(206, 52%, 14%, 1) 0%, hsla(209, 48%, 15%, 1) 33%, hsla(209, 45%, 20%, 1) 53%, hsla(209, 44%, 25%, 1) 75%, hsla(209, 44%, 25%, 1) 93%);
     background: -moz-linear-gradient(135deg, hsla(206, 52%, 14%, 1) 0%, hsla(209, 48%, 15%, 1) 33%, hsla(209, 45%, 20%, 1) 53%, hsla(209, 44%, 25%, 1) 75%, hsla(209, 44%, 25%, 1) 93%);
     background: -webkit-linear-gradient(135deg, hsla(206, 52%, 14%, 1) 0%, hsla(209, 48%, 15%, 1) 33%, hsla(209, 45%, 20%, 1) 53%, hsla(209, 44%, 25%, 1) 75%, hsla(209, 44%, 25%, 1) 93%);
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#112636", endColorstr="#142739", GradientType=1);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#112636", endColorstr="#142739", GradientType=1);
     padding: 50px;
     width: 100%;
     height: 360px;
@@ -1158,6 +1162,8 @@ img.step_arrow {
 /*footer CSS*/
 
 footer {
+
+    /* position: relative; */
     padding: 60px 0 0px;
     background: #00314a;
     color: #f1f1f1;
@@ -1645,6 +1651,7 @@ display: none;
         left: 30px;
         right: 30px;
     }
+
     .customer-feedback .owl-nav [class*="owl-"] {
         position: absolute;
         top: 50%;
@@ -1652,9 +1659,11 @@ display: none;
         margin-top: 45px;
         bottom: auto;
     }
+
     .customer-feedback .owl-prev {
         left: 0;
     }
+
     .customer-feedback .owl-next {
         right: 0;
     }
@@ -1685,12 +1694,12 @@ backdrop-filter: blur(6.1px);
     position: relative;
     top: 140px;
     padding: 30px 30px 50px 30px;
-    background: rgba( 255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37);
-    backdrop-filter: blur( 15px);
-    -webkit-backdrop-filter: blur( 15px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border-radius: 10px;
-    border: 1px solid rgba( 255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .box_wrapper h1 {

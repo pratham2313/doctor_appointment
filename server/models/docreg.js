@@ -13,6 +13,10 @@ var docreg = new mongoose.Schema({
     filedoc: {
         name: "", size: "", type: ""
     },
+    slot1time: String,
+    slot2time: String,
+    slot3time: String,
+    slot4time: String
 });
 
 var docregmodel = mongoose.model('docreg', docreg);

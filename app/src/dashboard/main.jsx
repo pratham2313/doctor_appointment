@@ -1,9 +1,6 @@
 
 import '../assetsdash/css/material-dashboard.min.css';
-// import '../assetsdash/css/material-dashboard.css.map';
-// import '../assetsdash/css/material-dashboard.css';
-// import '../assetsdash/css/nucleo-svg.css';
-import '../assetsdash/css/nucleo-icons.css';
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // import '../assetsdash/scss/material-dashboard.scss'
@@ -13,33 +10,22 @@ import Table from './table';
 
 const Main = () => {
     var [doclist, setdoc] = useState([]);
+    var [vdoclist, setvdoc] = useState([]);
     useEffect(() => {
         const fetchdoctor = async () => {
-            // var docdata = {
-            //     fullname: "",
-            //     phonenumber: "",
-            //     email: "",
-            //     role: "",
-            //     filedoc: {
-            //         name: "",
-            //         size: "",
-            //         type: ""
-            //     }
-            // }
-
             const res = await axios.get("http://localhost:8080/doctor/get");
-            const docdata = await res.data
-            //console.log(docdata);
-            //console.log('doctors' >> docdata.fullname);
+            const docdata = res.data.docdata;
             setdoc(docdata);
-            console.log(docdata);
+            const vdocdata = res.data.vdata;
+            setvdoc(vdocdata);
+            console.log(vdocdata);
         };
         fetchdoctor();
 
     }, []);
     return (
         <div>
-            <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+            <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-dark" id="sidenav-main">
                 <div class="sidenav-header">
                     <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
                     <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
@@ -218,7 +204,7 @@ const Main = () => {
                 {/* <!-- End Navbar --> */}
                 < div class="container-fluid py-4" >
                     <div class="row">
-                        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        {/* <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                             <div class="card">
                                 <div class="card-header p-3 pt-2">
                                     <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
@@ -234,7 +220,7 @@ const Main = () => {
                                     <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last week</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                             <div class="card">
                                 <div class="card-header p-3 pt-2">
@@ -242,8 +228,8 @@ const Main = () => {
                                         <i class="material-icons opacity-10">person</i>
                                     </div>
                                     <div class="text-end pt-1">
-                                        <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-                                        <h4 class="mb-0">2,300</h4>
+                                        <p class="text-sm mb-0 text-capitalize">Total Verified Doctor</p>
+                                        <h4 class="mb-0">{vdoclist.length}</h4>
                                     </div>
                                 </div>
                                 <hr class="dark horizontal my-0" />
@@ -260,7 +246,7 @@ const Main = () => {
                                     </div>
                                     <div class="text-end pt-1">
                                         <p class="text-sm mb-0 text-capitalize">New Clients</p>
-                                        <h4 class="mb-0">3,462</h4>
+                                        <h4 class="mb-0">{doclist.length}</h4>
                                     </div>
                                 </div>
                                 <hr class="dark horizontal my-0" />
@@ -269,23 +255,7 @@ const Main = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="card">
-                                <div class="card-header p-3 pt-2">
-                                    <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                                        <i class="material-icons opacity-10">weekend</i>
-                                    </div>
-                                    <div class="text-end pt-1">
-                                        <p class="text-sm mb-0 text-capitalize">Sales</p>
-                                        <h4 class="mb-0">$103,430</h4>
-                                    </div>
-                                </div>
-                                <hr class="dark horizontal my-0" />
-                                <div class="card-footer p-3">
-                                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than yesterday</p>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
 
 

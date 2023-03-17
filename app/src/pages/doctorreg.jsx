@@ -1,4 +1,4 @@
-import Header from './Header';
+import Header from './header_doc';
 import Footer from './Footer';
 // import css from '../images/patientreg.css';
 import React, { Component } from 'react';

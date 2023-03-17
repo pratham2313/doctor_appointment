@@ -10,7 +10,7 @@ const Table = () => {
     var [doclist, setdoc] = useState([]);
     const fetchdoctor = async () => {
         const res = await axios.get("http://localhost:8080/doctor/get");
-        const docdata = await res.data
+        const docdata = await res.data.docdata
         //console.log(docdata);
         //console.log('doctors' >> docdata.fullname);
         setdoc(docdata);
@@ -125,12 +125,12 @@ const Table = () => {
                                                             <td class="align-middle text-center">
                                                                 <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                                             </td>
-                                                            <td class="align-middle">
+                                                            <td class="align-middle text-center text-sm">
                                                                 {/* <a onClick={getdocpdf()} class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                                                     showpdf
                                                                 </a> */}
 
-
+                                                                {/* <span onClick={getdocpdf} class="badge badge-sm bg-gradient-secondary" value={doc.email}>show pdf</span> */}
                                                                 <button onClick={getdocpdf} class="btn btn-dark" type="button" value={doc.email}>show pdf</button>
 
 
@@ -138,14 +138,14 @@ const Table = () => {
                                                                     <button onClick={getdocpdf} class="btn btn-dark " type="button" value={doc.email}>show pdf</button>
                                                                 </div> */}
                                                             </td>
-                                                            <td class="align-middle">
+                                                            <td class="align-middle text-center text-sm">
 
 
                                                                 <button onClick={Changedocstatus} class="btn" value={doc.email} style={{ backgroundColor: "lightgreen", borderRadius: "20px", color: "black" }} type="button" >✔</button>
 
 
                                                             </td>
-                                                            <td class="align-middle ml">
+                                                            <td class="align-middle text-center text-sm">
 
 
                                                                 <button onClick={Changedocstatus} class="btn" value={doc.email} style={{ backgroundColor: "red", borderRadius: "20px", color: "black" }} type="button" >✘</button>

@@ -1,7 +1,9 @@
 const express = require('express');
-const appoinfomodel = require('./models/appoinfo');
+const appoinfomodel = require('./models/finalappoinformationofdoctorandpatient');
 const patientregmodel = require('./models/patientreg');
 const docregmodel = require('./models/docreg');
+const docSpecialityModel = require('./models/doctorSpeciality');
+const docAppointmentModel = require('./models/docAppointment_date_slottime');
 const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
@@ -37,52 +39,59 @@ app.use(cors({
     origin: '*'
 }));
 
-
 // app.get('/', async (req, res) => {
-//     res.status(200).send({
-//         message: "server running successfully",
+//     var docSpeciality = new docSpecialityModel({
+//         speciality: "Radiologist",
+//         name: "ganpatbhai",
 //     });
-//     var appodetails = new appoinfomodel({
-//         Specialist: "Gynecology",
-//         docname: "Pratham",
-//         username: "Nilkanth",
-//         email: "123@gmail.com",
-//         phonenumber: "000000000",
-//         gender: "male",
-//         date: "10-12-2020",
-//         time: "4:50pm",
-//     });
-//     await appodetails.save(function (err, req1) {
+//     docSpeciality.save((err, req1) => {
 //         if (err) {
-//             console.log("error accour !");
-//             console.log(err);
+//             console.log("error occure");
 //         }
 //         else {
-//             console.log("details added");
+//             console.log("done");
 //         }
-//     });
+//     })
+// })
 
-// });
+app.get('/getSpeciality', async (req, res) => {
+    // var docSpeciality = new docSpecialityModel({
+    //     speciality: "Radiologist",
+    // });
+    // docSpeciality.save((err, req1) => {
+    //     if (err) {
+    //         console.log("error occure");
+    //     }
+    //     else {
+    //         console.log("done");
+    //     }
+    // })
+    const allspeciality = await docSpecialityModel.find();
+    // console.log("i am specialist")
+    res.status(200).json({ specialistdata: allspeciality });
+})
+
 app.post('/addappoinfo', (req, res) => {
-    res.status(200).send({
-        message: "server running successfully",
-    });
     var appodetails = new appoinfomodel({
-        specialist: req.body.specialist,
         docname: req.body.docname,
-        username: req.body.username,
         email: req.body.email,
+        patientname: req.body.patientname,
+        patientemail: req.body.patientemail,
         phonenumber: req.body.phonenumber,
         gender: req.body.gender,
         date: req.body.date,
-        time: req.body.time,
+        slot: req.body.slot,
+        appointmentstatus: "pendding",
     });
-    appodetails.save(function (err, req1) {
+    appodetails.save(async function (err, req1) {
         if (err) {
             console.log("error accour !");
         }
         else {
-            console.log("details added");
+            // const docuser = await docAppointmentModel.findOne({ email });
+            console.log("appointment done");
+            res.status(200).json({ message: "done" });
+
         }
     });
 
@@ -90,12 +99,11 @@ app.post('/addappoinfo', (req, res) => {
 
 
 
+/////////////////...................................patient.................................///////////////
 
-//patient registration.....
+//.................................................................patient registration.............................................
 app.post("/register", async (req, res) => {
     const { fullname, phonenumber, email, password } = req.body;
-    //console.log("register call");
-
     const encryptPassword = await bcrypt.hash(password, 10);
     try {
         const oldUser = await patientregmodel.findOne({ email });
@@ -120,7 +128,7 @@ app.post("/register", async (req, res) => {
 });
 
 
-//patient login
+//............................................................patient login...........................................
 
 app.post("/patientlogin", async (req, res) => {
     const { email, password } = req.body;
@@ -144,12 +152,6 @@ app.post("/patientlogin", async (req, res) => {
                     res.status(200).json({ message: 'ok' });
                 }
             })
-            // if (oldUser.password === encryptPassword) {
-            //     res.status(200).json({ message: 'ok' });
-            // }
-            // else {
-            //     res.json({ message: "don'tmatch" });
-            // }
 
         }
         else {
@@ -168,27 +170,8 @@ app.post("/patientlogin", async (req, res) => {
 })
 
 
-///docreg and file upload....
+///................................................file upload (binary).........................................
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: function (req, file, cd) {
-            cd(null, "uploads")
-        },
-        filename: function (req, file, cd) {
-            cd(null, file.originalname)
-        }
-    }),
-    fileFilter: function (req, file, cb) {
-        const ext = path.extname(file.originalname);
-        if (ext != ".pdf") {
-            //console.log("i am in if");
-            return cb(new Error("Only pdf file is allowed"));
-
-        }
-        cb(null, true);
-    }
-});
 
 // conn.once('open', () => {
 //     // Init stream
@@ -226,8 +209,98 @@ const upload = multer({
 //     }
 // });
 // const upload = multer({ storage });
-var uploadsingle = upload.single('docfile');
 
+// app.post('/upload', upload.single('docfile'), (req, res) => {
+//     // res.json({ docfile: req.docfile });
+//     console.log(req.body.docfile)
+// })
+
+// app.post("/upload", upload.fields([
+//     {
+//         name: "docfile",
+//         maxCount: 1
+//     },
+
+// ]),
+
+
+
+// );
+
+
+
+//.......................................................file upload (static folder).....................................
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: function (req, file, cd) {
+            cd(null, "uploads")
+        },
+        filename: function (req, file, cd) {
+            cd(null, file.originalname)
+        }
+    }),
+    fileFilter: function (req, file, cb) {
+        const ext = path.extname(file.originalname);
+        if (ext != ".pdf") {
+            //console.log("i am in if");
+            return cb(new Error("Only pdf file is allowed"));
+
+        }
+        cb(null, true);
+    }
+});
+
+var uploadsingle = upload.single('docfile');
+app.post("/upload", (req, res) => {
+    uploadsingle(req, res, (err) => {
+        if (err) {
+            //console.log(" i am in 2nd if");
+            res.status(200).json({ message: "only pdf file are allowed" });
+        }
+        else {
+            res.status(200).json({ message: "okk" });
+        }
+
+    })
+
+
+}
+);
+
+
+
+
+//...............................doctor registration.......................................
+
+
+app.post("/docreg", async (req, res) => {
+
+    console.log(req.body.specialty);
+    var docdetails = new docregmodel({
+        fullname: req.body.fullname,
+        phonenumber: req.body.phonenumber,
+        email: req.body.email,
+        specialty: req.body.specialty,
+        role: "Unverified Doctor",
+        filedoc: req.body.filedoc,
+        slot1time: "9:00 am",
+        slot2time: "11:00 am",
+        slot3time: "4:00 pm",
+        slot4time: "6:00 pm",
+    })
+    docdetails.save(function (err, req1) {
+        if (err) { res.status(500).send({ message: "error" }); }
+        else {
+            res.status(200).send({ message: "ok" });
+        }
+
+
+    })
+
+
+
+})
 app.post("/check", async (req, res) => {
     const { fullname, phonenumber, email, filedoc } = req.body;
     //console.log(filedoc);
@@ -242,72 +315,86 @@ app.post("/check", async (req, res) => {
         res.status(200).json({ message: "ok" });
     }
 })
-app.post("/docreg", async (req, res) => {
-    // const { fullname, phonenumber, email, filedoc } = req.body;
-    // //console.log(filedoc);
-    // //console.log(email);
-    // const oldUser = await docregmodel.findOne({ email });
-    // //console.log(oldUser.length);
-    // if (oldUser) {
-    //     //console.log("i am in if");
-    //     res.status(200).json({ message: "Exists" });
-    // }
 
-    //console.log(" i am in else");
-    console.log(req.body.specialty);
-    var docdetails = new docregmodel({
-        fullname: req.body.fullname,
-        phonenumber: req.body.phonenumber,
-        email: req.body.email,
-        specialty: req.body.specialty,
-        role: "Unverified Doctor",
-        filedoc: req.body.filedoc
-    })
-    docdetails.save(function (err, req1) {
-        if (err) { res.status(500).send({ message: "error" }); }
-        else {
-            res.status(200).send({ message: "ok" });
+//..............................................doctor card after processed for appointment booking...............................
+
+app.post('/finddoc', async (req, res) => {
+    const specialty = req.body.specialist;
+    //console.log(specialty);
+    const role = "Verified";
+    const docinfo = await docregmodel.find({ specialty, role });
+    console.log(docinfo);
+    if (docinfo) {
+        res.status(200).json({ message: "finddoc", docinfo: docinfo })
+    }
+    else {
+        res.status(200).json({ message: "nodoc" });
+    }
+
+
+});
+app.post('/finddocemail', async (req, res) => {
+    const email = req.body.email;
+    //console.log(specialty);
+    const role = "Verified";
+    const docinfo = await docregmodel.find({ email, role });
+    //console.log(docinfo);
+
+    res.status(200).json({ docinfo: docinfo })
+
+
+});
+
+
+
+
+
+
+
+
+
+////////////..............................verifier...................................//////////
+
+//............................................................doctor get for verifier.............................................
+
+app.get("/doctor/get", async (req, res) => {
+    const verifieddoc = await docregmodel.find({ role: "Verified" });
+    docregmodel.find({ role: "Unverified Doctor" }, (err, data) => {
+        if (err) {
+            res.status(500).send(err);
         }
-        //res.setHeader('Content-Type', 'text/html');
-        //console.log('docreg is inserted');
-
+        else {
+            const docdata = data;
+            res.status(200).json({ docdata: docdata, vdata: verifieddoc });
+            //console.log(data);
+        }
     })
-
 
 
 })
 
-// app.post("/upload", upload.fields([
-//     {
-//         name: "docfile",
-//         maxCount: 1
-//     },
+//....................................verifier change doctor status.............................
 
-// ]),
+app.post("/changestatus", async (req, res) => {
 
+    const email = req.body.doctormail
+    try {
+        const result = await docregmodel.updateOne({ email }, {
+            $set: {
+                role: "Verified"
+            }
+        });
+        res.status(200).json({ message: "doctor verified" });
+    }
+    catch (e) {
 
+    }
 
-// );
-app.post("/upload", (req, res) => {
-    uploadsingle(req, res, (err) => {
-        if (err) {
-            //console.log(" i am in 2nd if");
-            res.status(200).json({ message: "only pdf file are allowed" });
-        }
-        else {
-            res.status(200).json({ message: "okk" });
-        }
-        //console.log(req.file);
-    })
+})
+
+//.................................................read pdf...........................................
 
 
-}
-);
-
-// app.post('/upload', upload.single('docfile'), (req, res) => {
-//     // res.json({ docfile: req.docfile });
-//     console.log(req.body.docfile)
-// })
 var read;
 let fs = require('fs');
 const { url } = require('inspector');
@@ -323,7 +410,6 @@ app.post("/getpdf", async (req, res) => {
         var url = "http://localhost:8080/readpdf";
         request(url, (error, res, body) => {
 
-            // Printing the error if occurred
             if (error) console.log(error)
             read = fs.createReadStream(`uploads/${user.filedoc.name}`);
         });
@@ -332,7 +418,7 @@ app.post("/getpdf", async (req, res) => {
 
 
     else {
-        //res.status(200).json({ message: "no pdf" })
+
     }
 
 
@@ -340,69 +426,71 @@ app.post("/getpdf", async (req, res) => {
 app.get("/readpdf", (req, res) => {
     read.pipe(res);
 })
-app.post("/changestatus", async (req, res) => {
 
-    const email = req.body.doctormail
-    try {
-        const result = await docregmodel.updateOne({ email }, {
-            $set: {
-                role: "Verified"
-            }
-        });
-        res.status(200).json({ message: "doctor verified" });
-    }
-    catch (e) {
-
-    }
-    //console.log(req.body.docmail)
-    //const user = await docregmodel.findOne({ email });
-    //console.log(email);
-
-    // if (result) {
-    //     console.log(result);
-    //     //user.updateOne({ role: "Verified" });
-    //     res.status(200).json({ message: "doctor verified" });
-    // }
-
-
-    // else {
-    //     res.status(200).json({ message: "no user" })
-    // }
-
-
-})
-// app.post("/getdocfile", (req, res) => {
-//     console.log("i am getdocfile");
-//     reader = fs.createReadStream(`uploads/CE_100_NIS_Lab3.pdf`);
-
-//     // Read and display the file data on console
-//     // reader.on('data', function (chunk) {
-//     //     console.log(chunk.toString());
-//     // });
-//     reader.pipe(res);
-// })
-
-// Use fs.createReadStream() method
-// to read the file
-
-
-//get doctor
-app.get("/doctor/get", async (req, res) => {
-    //console.log("doctor get called");
-    //const unverifieddoc = await docregmodel.findOne({ role: "Unverified Doctor" });
-    docregmodel.find({ role: "Unverified Doctor" }, (err, data) => {
+// .......................................date time check for appointment....................................
+app.post("/ss", (req, res) => {
+    var datetime = new docAppointmentModel({
+        date: "2023-03-07",
+        email: "zeel@gamil.com",
+        docname: "zeel",
+        slot1: "true",
+        slot2: "false",
+        slot3: "true",
+        slot4: "false",
+    });
+    datetime.save((err, req1) => {
         if (err) {
-            res.status(500).send(err);
+            console.log("error occure");
         }
         else {
-            const docdata = data;
-            res.status(200).json(data);
-            //console.log(data);
+            console.log("done");
         }
     })
+})
+app.post("/getdatetime", async (req, res) => {
+    console.log(req.body.email);
+    const email = req.body.email;
+    const date = req.body.date;
+    const docname = req.body.docname;
+    //console.log(specialty);
+
+    const datetimeinfo = await docAppointmentModel.findOne({ email, date });
+    if (datetimeinfo) {
+        console.log("i if part");
+        res.status(200).json({ docinfo: datetimeinfo })
+    }
+    else {
+        var datetime = new docAppointmentModel({
+            date: date,
+            email: email,
+            docname: docname,
+            slot1: "false",
+            slot2: "false",
+            slot3: "false",
+            slot4: "false",
+        });
+        datetime.save(async (err, req1) => {
+            if (err) {
+                console.log("error occure");
+            }
+            else {
+                console.log("done");
+            }
+            const datetimeinfo1 = await docAppointmentModel.findOne({ email, date });
+            res.status(200).json({ docinfo: datetimeinfo1 })
+        })
+    }
+    console.log(datetimeinfo);
 
 
 })
+
+
+
+
+
+
+//..................................server port..................................
 
 const port = 8080
 const mode = "devlopment"

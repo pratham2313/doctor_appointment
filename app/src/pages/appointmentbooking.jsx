@@ -3,179 +3,69 @@ import React, { Component } from 'react';
 import { useState, useEffect } from "react";
 import Header from './Header';
 import Footer from './Footer';
-import Select from "react-select";
-import axios, { isCancel, AxiosError } from 'axios';
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 //pehela pehela pyar he.....
 
 function Appointmentbooking() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  // const [docmail, setdoc] = useState({ email: location.state.docmail });
+  const [docandpatientappointementdetails, setdetails] = useState(location.state.slotinfo);
+  //console.log(docandpatientappointementdetails);
+  //console.log(location.state.slotinfo);
+  //var docinfo = { email: "", docname: "", specialist: "" };
+  var temp = {};
+  useEffect(() => {
+    const fetchdoctor = async () => {
+      // await axios.post("http://localhost:8080/finddocemail", docmail).then((res) => {
+      //   console.log(res.data.docinfo);
+      //   temp = res.data.docinfo;
+      //   setdoc({ email: temp[0].email });
+      //   docinfo.email = temp[0].email;
+      //   docinfo.docname = temp[0].fullname;
+      //   docinfo.specialist = temp[0].specialty;
+      //   // console.log(temp[0].fullname);
+      //   console.log(docmail.email);
 
-  const [appodetails, setdetails] = useState({
-    specialist: "", docname: "", username: "", email: "", phonenumber: "", gender: "", date: "", time: ""
-  })
+      // });
 
-  const { specialist, docname, username, email, phonenumber, gender, date, time } = appodetails;
+    };
+    fetchdoctor();
+
+  }, []);
+
+  // const [appodetails, setdetails] = useState({
+  //   specialist: "", docname: "", username: "", email: "", phonenumber: "", gender: "", date: "", time: ""
+  // })
+
+  // const { specialist, docname, username, email, phonenumber, gender, date, time } = appodetails;
 
 
   const handleInput = (e) => {
-    setdetails({ ...appodetails, [e.target.name]: e.target.value });
+    setdetails({ ...docandpatientappointementdetails, [e.target.name]: e.target.value });
   }
-  const Specialist = [
-    {
-      value: "Gynecology",
-      label: "Gynecology"
-    },
-    {
-      value: "Dermatology",
-      label: "Dermatology"
-    },
-    {
-      value: "Orthopedic",
-      label: "Orthopedic"
-    },
-    {
-      value: "Ayurveda",
-      label: "Ayurveda"
-    },
-    {
-      value: "Homeopathy",
-      label: "Homeopathy"
-    },
-    {
-      value: "Nephrologist",
-      label: "Nephrologist"
-    },
-    {
-      value: "Urologist",
-      label: "Urologist"
-    },
-    {
-      value: "Neurologist",
-      label: "Neurologist"
-    },
-    {
-      value: "Dentist",
-      label: "Dentist"
-    },
-    {
-      value: "Ophthalmology",
-      label: "Ophthalmology"
-    },
-    {
-      value: "Cardiologist",
-      label: "Cardiologist"
-    },
-    {
-      value: "Pulmonologist",
-      label: "Pulmonologist"
-    },
-    {
-      value: "Psychiatrist",
-      label: "Psychiatrist"
-    },
-    {
-      value: "Neurologist",
-      label: "Neurologist"
-    },
-    {
-      value: "Radiologist",
-      label: "Radiologist"
-    },
-
-    {
-      value: "Pediatrician",
-      label: "Pediatrician"
-    }
-  ];
-
-  const Gynecology = [
-    {
-      value: "1",
-      label: "1"
-    },
-    {
-      value: "2",
-      label: "2"
-    },
-    {
-      value: "3",
-      label: "3"
-    }
-  ];
-  const Dermatology = [
-    {
-      value: "C++",
-      label: "C++"
-    },
-    {
-      value: "java",
-      label: "java"
-    },
-    {
-      value: "Python",
-      label: "Python"
-    },
-    {
-      value: "C#",
-      label: "C#"
-    }
-  ];
-  const Orthopedic = [
-    {
-      value: "Arrays",
-      label: "Arrays"
-    },
-    {
-      value: "LinkedList",
-      label: "LinkedList"
-    },
-    {
-      value: "Stack",
-      label: "Stack"
-    },
-    {
-      value: "Queue",
-      label: "Queue"
-    }
-  ];
-  const notselect = [
-    {
-      value: "specialist not select",
-      lable: "specialist not select"
-    }
-  ]
-
-  const [selected, setSelected] = useState("");
-
-  let type = null;
-
-  if (selected === "Gynecology") {
-    type = Gynecology;
-  } else if (selected === "Dermatology") {
-    type = Dermatology;
-  } else if (selected === "Orthopedic") {
-    type = Orthopedic;
-  }
-  let updatedValue = {};
-  const changeSelectOptionHandler = (event) => {
-    console.log(event.value);
-    setSelected(event.value);
-    updatedValue = { specialist: event.value };
-    //setdetails({ ...appodetails, [e.target.name]: e.target.value });
-    setdetails({ ...appodetails, ...updatedValue });
-  };
-  const changedocName = (event) => {
-    updatedValue = { docname: event.value };
-    setdetails({ ...appodetails, ...updatedValue });
-  };
 
   const submit = async e => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/addappoinfo", appodetails).then(() => {
-      toast.success("Your Appointment Successfully booked");
+
+    await axios.post("http://localhost:8080/addappoinfo", docandpatientappointementdetails).then((res) => {
+      if (res.data.message === "error") {
+        //console.log(res.data.docinfo);
+        // navigate("/card", { state: { docinfo: res.data.docinfo } });
+        toast.error("Someting Went Wrong");
+      }
+      else if (res.data.message === "done") {
+        toast.success("Appointment request has sent to your selected doctor");
+        toast.info("keep checking your profile");
+      }
+
     });
+
 
   }
 
@@ -193,7 +83,8 @@ function Appointmentbooking() {
             <div class="col-lg-6 py-5">
               <div class="py-5">
                 <h1 class="display-5 text-black mb-4">We Are A Certified and Award Winning Dental Clinic You Can Trust</h1>
-                <p class="text-black mb-0">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
+                <h4 class="text-black mb-0">Dr Name : Dr.{docandpatientappointementdetails.docname}</h4>
+                <h4 class="text-black mb-0">Dr Email : {docandpatientappointementdetails.email}</h4>
               </div>
             </div>
             <div class="col-lg-6">
@@ -202,81 +93,51 @@ function Appointmentbooking() {
                 <form>
                   <div class="row g-3">
 
+
+
+                    {/* <div class="col-12 col-sm-6">
+                      <input id="placeholdercolor" class="form-control bg-light border-0" disabled style={{ height: "55px" }}></input>
+                    </div> */}
                     <div class="col-12 col-sm-6">
-                      <Select
-                        options={Specialist}
-                        placeholder={<div>Select Specialist</div>}
-                        autoFocus={true}
-                        onChange={changeSelectOptionHandler}
-                      ></Select>
-
-                      {/* <option value="">Select Specialty</option>
-                        <option value="Gynecology">Gynecology</option>
-                        <option value="Dermatology">Dermatology</option>
-                        <option value="Pediatrician">Pediatrician</option>
-                        <option value="Orthopedic">Orthopedic</option>
-                        <option value="Ayurveda">Ayurveda</option>
-                        <option value="Homeopathy">Homeopathy</option>
-                        <option value="Nephrologist">Nephrologist</option>
-                        <option value="Urologist">Urologist</option>
-                        <option value="Neurologist">Neurologist</option>
-                        <option value="Dentist">Dentist</option>
-                        <option value="Ophthalmology">Ophthalmology</option>
-                        <option value="Cardiologist">Cardiologist</option>
-                        <option value="Oncologist">Oncologist</option>
-                        <option value="Pulmonologist">Pulmonologist</option>
-                        <option value="Psychiatrist">Psychiatrist</option>
-                        <option value="Neurologist">Neurologist</option>
-                        <option value="Radiologist">Radiologist</option> */}
-
+                      <input name="patientname" onChange={e => handleInput(e)} type="text" class="form-control bg-light border-0" placeholder="Your Name" style={{ height: "55px" }} required />
                     </div>
                     <div class="col-12 col-sm-6">
-                      <Select
-                        options={type}
-
-                        placeholder={<div>Select Doctor</div>}
-                        onChange={changedocName}
-                      // onChange={e => handleInput(e)}
-
-                      ></Select>
-                      {/* <select class="form-select bg-light border-0" style={{ height: "55px" }} >
-                        <option selected>Select A Service</option>
-                        <option value="1">Service 1</option>
-                        <option value="2">Service 2</option>
-                        <option value="3">Service 3</option>
-                      </select> */}
-
+                      <input name="patientemail" onChange={e => handleInput(e)} type="email" class="form-control bg-light border-0" placeholder="Your Email" style={{ height: "55px" }} required />
                     </div>
                     <div class="col-12 col-sm-6">
-                      <input name="username" value={username} onChange={e => handleInput(e)} type="text" class="form-control bg-light border-0" placeholder="Your Name" style={{ height: "55px" }} />
+                      <input name="phonenumber" onChange={e => handleInput(e)} type="text" class="form-control bg-light border-0" placeholder="Phone Number" style={{ height: "55px" }} required />
                     </div>
                     <div class="col-12 col-sm-6">
-                      <input name="email" value={email} onChange={e => handleInput(e)} type="email" class="form-control bg-light border-0" placeholder="Your Email" style={{ height: "55px" }} />
-                    </div>
-                    <div class="col-12 col-sm-6">
-                      <input name="phonenumber" value={phonenumber} onChange={e => handleInput(e)} type="text" class="form-control bg-light border-0" placeholder="Phone Number" style={{ height: "55px" }} />
-                    </div>
-                    <div class="col-12 col-sm-6">
-                      <select name="gender" value={gender} onChange={e => handleInput(e)} class="form-select bg-light border-0" style={{ height: "55px" }} >
+                      <select name="gender" onChange={e => handleInput(e)} class="form-select bg-light border-0" style={{ height: "55px" }} >
                         <option selected>Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
                       </select>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    {/* <div class="col-12 col-sm-6">
                       <div class="date" id="date1" data-target-input="nearest">
 
                         <form action="">
                           <input type="date" id="birthdaytime" name="date" class="form-control bg-light border-0 datetimepicker-input"
-                            placeholder="Appointment Date" value={date} onChange={e => handleInput(e)} data-target="#date1" data-toggle="datetimepicker" style={{ height: "55px" }} />
+                            placeholder="Appointment Date" onChange={e => handleInput(e)} data-target="#date1" data-toggle="datetimepicker" style={{ height: "55px" }} />
 
                         </form>
                       </div>
 
 
+                    </div> */}
+
+                    <div class="col-12 col-sm-6">
+                      <label>: Your Appointment date : </label>
+                      <input name="phonenumber" disabled type="text" class="form-control bg-light border-0" placeholder={docandpatientappointementdetails.date}
+                        value={docandpatientappointementdetails.date} style={{ height: "55px" }} />
                     </div>
                     <div class="col-12 col-sm-6">
+                      <label>: Your Appointment Time : </label>
+                      <input name="phonenumber" type="text" class="form-control bg-light border-0" value={docandpatientappointementdetails.slot} placeholder="Phone Number" style={{ height: "55px" }} />
+                    </div>
+                    {/* <div class="col-12 col-sm-6">
                       <select name="time" value={time} onChange={e => handleInput(e)} class="form-select bg-light border-0" style={{ height: "55px" }} >
                         <option selected>Time Slot</option>
                         <option value="10:00 am">10:00 am</option>
@@ -285,7 +146,7 @@ function Appointmentbooking() {
                         <option value="06:00 pm">06:00 pm</option>
                         <option value="08:00 pm">08:00 pm</option>
                       </select>
-                    </div>
+                    </div> */}
 
 
                     {/* <div class="col-12 col-sm-6">
