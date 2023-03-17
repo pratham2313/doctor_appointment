@@ -186,49 +186,27 @@ function Card_doc() {
 
             // false part
             if (data.slot1 == "false") {
-                if (curTime > 9) {
-                    //console.log("in if 1");
-                    document.getElementById("slot1").setAttribute("disabled", true);
-                }
-                else {
-                    document.getElementById("slot1").removeAttribute("disabled");
-                }
+
                 //console.log(document.getElementById("slot1"));
-                // document.getElementById("slot1").setAttribute("disabled", false);
+                document.getElementById("slot1").removeAttribute("disabled", false);
 
             }
             if (data.slot2 == "false") {
-                if (curTime > 11) {
-                    document.getElementById("slot2").setAttribute("disabled", true);
-                }
-                else {
-                    document.getElementById("slot2").removeAttribute("disabled");
-                }
+
                 ///console.log(document.getElementById("slot2"));
-                //document.getElementById("slot2").setAttribute("disabled", false);
+                document.getElementById("slot2").removeAttribute("disabled", false);
 
             }
             if (data.slot3 == "false") {
-                if (curTime > 16) {
-                    document.getElementById("slot3").setAttribute("disabled", true);
-                }
-                else {
-                    document.getElementById("slot3").removeAttribute("disabled");
-                }
+
                 //console.log(document.getElementById("slot3"));
-                //document.getElementById("slot3").setAttribute("disabled", false);
+                document.getElementById("slot3").removeAttribute("disabled", false);
 
             }
             if (data.slot4 == "false") {
-                if (curTime > 18) {
-                    document.getElementById("slot4").setAttribute("disabled", true);
-                    document.getElementById("hiddenatr").removeAttribute("hidden");
-                }
-                else {
-                    document.getElementById("slot4").removeAttribute("disabled");
-                }
+
                 //console.log(document.getElementById("slot4"));
-                //document.getElementById("slot4").setAttribute("disabled", false);
+                document.getElementById("slot4").removeAttribute("disabled", false);
 
             }
             setslot(data);
