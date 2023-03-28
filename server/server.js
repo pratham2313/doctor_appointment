@@ -9,6 +9,7 @@ const { GridFsStorage } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 var crypto = require('crypto')
 const path = require('path');
+const nodemailer = require('nodemailer');
 const mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
 const bcrypt = require('bcrypt');
@@ -483,8 +484,76 @@ app.post("/getdatetime", async (req, res) => {
     console.log(datetimeinfo);
 
 
+});
+
+
+
+// .................................Email sent................................
+
+const user = "senderfromern@gmail.com";
+const pass = "vgghkoksogbhhtve";
+
+const transport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+        user: user,
+        pass: pass,
+    },
+});
+const sendConfirmationEmail = (name, email, token) => {
+    console.log("Inside sendconfirm");
+    transport
+        .sendMail({
+            from: user,
+            to: email,
+            subject: "Appointment Booking",
+            html: `<h1>Email Confirmation</h1>
+            <h2>Request from Shayona</h2>
+            <p> Please confirm this email by clicking on the following link</p>
+            <a href=http://localhost:3000/admin/dashboard> Click here</a>
+            </div>`,
+        })
+        .catch((err) => console.log(err));
+};
+app.get("/", (req, res) => {
+    sendConfirmationEmail("pratham", "patelpratham298@gmail.com", "");
 })
 
+
+
+
+//............................. Audio Video call .......................//
+const http = require("http")
+const socket = http.createServer(app)
+const io = require("socket.io")(socket, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+})
+
+
+
+//............ videocall functionality.............//
+io.on("connection", (socket) => {
+    // console.log(socket.id, 'connected');
+    const id = socket.id;
+    socket.emit("me", id);
+    // console.log(id);
+
+    socket.on("disconnect", () => {
+        socket.broadcast.emit("callEnded")
+    })
+
+    socket.on("callUser", (data) => {
+        io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+    })
+
+    socket.on("answerCall", (data) => {
+        io.to(data.to).emit("callAccepted", data.signal)
+    })
+})
+socket.listen(8001, () => console.log("Videocall server is running on port 8001"))
 
 
 

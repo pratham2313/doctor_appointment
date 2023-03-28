@@ -19,11 +19,11 @@ function Card_doc() {
     var slotobj = { slot11: "", slot22: "", slot33: "", slot44: "" };
     const [datepicker, setdatepicker] = useState(false);
     // const [docinfofordatecard, setdocinfofordatecard] = useState([]);
-    const [currentdate, setcurrentdate] = useState({ date: "" });
+    // const [currentdate, setcurrentdate] = useState({ date: "" });
     var docemail = { email: "" };
     var datetimechecker = { email: "", date: "", docname: "" };
     const current = new Date();
-    //var curTime = current.getHours() + ':' + current.getMinutes() + ':' + current.getSeconds();
+
     var curTime = current.getHours();
     console.log(curTime);
     var cdate = current.getDate();
@@ -38,6 +38,7 @@ function Card_doc() {
 
     }
     const sdate = `${current.getFullYear()}-${cmonth}-${cdate}`;
+    var todaydate = `${current.getFullYear()}-${cmonth}-${cdate}`;
     console.log(location.state);
     const [docinformation, setdoc] = useState(location.state.docinfo);
     // console.log(docinformation[0].fullname);
@@ -170,6 +171,7 @@ function Card_doc() {
             console.log(res.data.docinfo);
             var data = res.data.docinfo;
             if (data.slot1 == "true") {
+
                 document.getElementById("slot2").setAttribute("disabled", true);
             }
             if (data.slot2 == "true") {
@@ -186,35 +188,78 @@ function Card_doc() {
 
             // false part
             if (data.slot1 == "false") {
+                console.log(todaydate);
+                console.log(datetimechecker.date);
+                if (datetimechecker.date == todaydate) {
+                    if (curTime > 9) {
+                        console.log("in if 1");
+                        document.getElementById("slot1").setAttribute("disabled", true);
+                    }
+                    else {
+                        document.getElementById("slot1").removeAttribute("disabled");
+                    }
+
+                }
+                else {
+                    document.getElementById("slot1").removeAttribute("disabled");
+                }
 
                 //console.log(document.getElementById("slot1"));
-                document.getElementById("slot1").removeAttribute("disabled", false);
+                //document.getElementById("slot1").removeAttribute("disabled", false);
 
             }
             if (data.slot2 == "false") {
+                if (datetimechecker.date == todaydate) {
+                    if (curTime > 11) {
+                        //console.log("in if 1");
+                        document.getElementById("slot2").setAttribute("disabled", true);
+                    }
+                    else {
+                        document.getElementById("slot2").removeAttribute("disabled");
+                    }
 
-                ///console.log(document.getElementById("slot2"));
-                document.getElementById("slot2").removeAttribute("disabled", false);
+                }
+                else {
+                    document.getElementById("slot2").removeAttribute("disabled");
+                }
 
             }
             if (data.slot3 == "false") {
+                if (datetimechecker.date == todaydate) {
+                    if (curTime > 16) {
+                        //console.log("in if 1");
+                        document.getElementById("slot3").setAttribute("disabled", true);
+                    }
+                    else {
+                        document.getElementById("slot3").removeAttribute("disabled");
+                    }
 
-                //console.log(document.getElementById("slot3"));
-                document.getElementById("slot3").removeAttribute("disabled", false);
-
+                }
+                else {
+                    document.getElementById("slot3").removeAttribute("disabled");
+                }
             }
             if (data.slot4 == "false") {
+                if (datetimechecker.date == todaydate) {
+                    if (curTime > 18) {
+                        //console.log("in if 1");
+                        document.getElementById("slot4").setAttribute("disabled", true);
+                    }
+                    else {
+                        document.getElementById("slot4").removeAttribute("disabled");
+                    }
 
-                //console.log(document.getElementById("slot4"));
-                document.getElementById("slot4").removeAttribute("disabled", false);
-
+                }
+                else {
+                    document.getElementById("slot4").removeAttribute("disabled");
+                }
             }
             setslot(data);
         });
 
     };
     const submit = (e) => {
-        navigate("/appointment", { state: { slotinfo: slot } });
+        navigate("/appointment", { state: { slotinfo: slot, docinfo: slottime } });
     }
 
     return (
@@ -331,7 +376,7 @@ function Card_doc() {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                            <button onClick={(e) => submit(e)} type="button" class="btn btn-dark " data-bs-dismiss="modal">Save changes</button>
+                                            <button onClick={(e) => submit(e)} type="button" class="btn btn-dark " data-bs-dismiss="modal">Proceed Further</button>
                                         </div>
                                     </div>
                                 </div>

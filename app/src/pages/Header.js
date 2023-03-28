@@ -28,6 +28,9 @@ function Header() {
                                 <li class="nav-item">
                                     <a class="nav-link" href="/patientdashboard">Profile</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/VideoCall">Profile</a>
+                                </li>
                                 {/* <li class="nav-item">
                                     <a class="nav-link" href="#specialties">Specialties</a>
                                 </li>

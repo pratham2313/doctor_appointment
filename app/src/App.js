@@ -10,6 +10,7 @@ import Main from './dashboard/main';
 import Card_doc from './pages/Card_doc';
 import DateTimePicker from './pages/DateTimePicker';
 import PatientDashboard from './dashboard/Patient/patientDashboard';
+import Call from './pages/VideoCall';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/dashmain' element={<Main />} />
           <Route path='/card' element={<Card_doc />} />
           <Route path='/patientdashboard' element={<PatientDashboard />} />
+          <Route path='/VideoCall' element={<Call />} />
           {/* <Route path='http://localhost:5000/'/> */}
 
         </Routes>

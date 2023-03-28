@@ -14,25 +14,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function Appointmentbooking() {
   const navigate = useNavigate();
   const location = useLocation();
+  //var data=location.state.slotinfo;
+  const [data, setdata] = useState(location.state.slotinfo);
   // const [docmail, setdoc] = useState({ email: location.state.docmail });
-  const [docandpatientappointementdetails, setdetails] = useState(location.state.slotinfo);
-  //console.log(docandpatientappointementdetails);
-  //console.log(location.state.slotinfo);
-  //var docinfo = { email: "", docname: "", specialist: "" };
-  var temp = {};
+  // const [docandpatientappointementdetails, setdetails] = useState(location.state.slotinfo);
+  const [docandpatientappointementdetails, setdetails] = useState({ date: data.date, email: data.email, slot1: data.slot1, slot2: data.slot2, slot3: data.slot3, slot4: data.slot4, docname: data.docname, slot: data.slot, patientname: "", patientemail: "", phonenumber: "", gender: "" });
+  const [docinfo, setdocinfo] = useState(location.state.docinfo);
+
   useEffect(() => {
     const fetchdoctor = async () => {
-      // await axios.post("http://localhost:8080/finddocemail", docmail).then((res) => {
-      //   console.log(res.data.docinfo);
-      //   temp = res.data.docinfo;
-      //   setdoc({ email: temp[0].email });
-      //   docinfo.email = temp[0].email;
-      //   docinfo.docname = temp[0].fullname;
-      //   docinfo.specialist = temp[0].specialty;
-      //   // console.log(temp[0].fullname);
-      //   console.log(docmail.email);
-
-      // });
 
     };
     fetchdoctor();
@@ -47,24 +37,33 @@ function Appointmentbooking() {
 
 
   const handleInput = (e) => {
+    // setdetails(location.state.slotinfo);
     setdetails({ ...docandpatientappointementdetails, [e.target.name]: e.target.value });
   }
 
   const submit = async e => {
-    e.preventDefault();
 
-    await axios.post("http://localhost:8080/addappoinfo", docandpatientappointementdetails).then((res) => {
-      if (res.data.message === "error") {
-        //console.log(res.data.docinfo);
-        // navigate("/card", { state: { docinfo: res.data.docinfo } });
-        toast.error("Someting Went Wrong");
-      }
-      else if (res.data.message === "done") {
-        toast.success("Appointment request has sent to your selected doctor");
-        toast.info("keep checking your profile");
-      }
 
-    });
+    if (docandpatientappointementdetails.patientname == "" || docandpatientappointementdetails.patientemail == "" || docandpatientappointementdetails.phonenumber == "" || docandpatientappointementdetails.gender == "") {
+      //e.preventDefault();
+      //toast.error("Fill Gender feild");
+    }
+    else {
+      e.preventDefault();
+
+      await axios.post("http://localhost:8080/addappoinfo", docandpatientappointementdetails).then((res) => {
+        if (res.data.message === "error") {
+          //console.log(res.data.docinfo);
+          // navigate("/card", { state: { docinfo: res.data.docinfo } });
+          toast.error("Someting Went Wrong");
+        }
+        else if (res.data.message === "done") {
+          toast.success("Appointment request has sent to your selected doctor");
+          toast.info("keep checking your profile");
+        }
+
+      });
+    }
 
 
   }
@@ -82,9 +81,10 @@ function Appointmentbooking() {
           <div class="row gx-5">
             <div class="col-lg-6 py-5">
               <div class="py-5">
-                <h1 class="display-5 text-black mb-4">We Are A Certified and Award Winning Dental Clinic You Can Trust</h1>
-                <h4 class="text-black mb-0">Dr Name : Dr.{docandpatientappointementdetails.docname}</h4>
-                <h4 class="text-black mb-0">Dr Email : {docandpatientappointementdetails.email}</h4>
+                <h1 class="display-5 text-black mb-4">We Are A Certified!! You Can Trust</h1>
+                <h4 class="text-black mb-0">Dr Name : Dr.{docinfo[0].fullname}</h4>
+                <h4 class="text-black mb-0">Dr Speciality : {docinfo[0].specialty}</h4>
+                <h4 class="text-black mb-0">Dr Email : {docinfo[0].email}</h4>
               </div>
             </div>
             <div class="col-lg-6">
@@ -108,8 +108,8 @@ function Appointmentbooking() {
                       <input name="phonenumber" onChange={e => handleInput(e)} type="text" class="form-control bg-light border-0" placeholder="Phone Number" style={{ height: "55px" }} required />
                     </div>
                     <div class="col-12 col-sm-6">
-                      <select name="gender" onChange={e => handleInput(e)} class="form-select bg-light border-0" style={{ height: "55px" }} >
-                        <option selected>Gender</option>
+                      <select name="gender" onChange={e => handleInput(e)} class="form-select bg-light border-0" style={{ height: "55px" }} required >
+                        <option value="">Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other">Other</option>
