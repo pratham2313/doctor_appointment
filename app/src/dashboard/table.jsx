@@ -8,13 +8,17 @@ const Table = () => {
     var docpdf = { docmail: "" };
     var docstatus = { doctormail: "" };
     var [doclist, setdoc] = useState([]);
+    var [vdoclist, setvdoc] = useState([]);
     const fetchdoctor = async () => {
         const res = await axios.get("http://localhost:8080/doctor/get");
         const docdata = await res.data.docdata
         //console.log(docdata);
         //console.log('doctors' >> docdata.fullname);
         setdoc(docdata);
-        console.log(docdata);
+        // console.log(docdata);
+        const vdocdata = res.data.vdata;
+        setvdoc(vdocdata);
+        // console.log(vdocdata);
     };
     useEffect(() => {
 
@@ -51,9 +55,14 @@ const Table = () => {
         //setdocument(e);
         axios.post("http://localhost:8080/changestatus", docstatus).then((res) => {
             if (res.data.message === "doctor verified") {
-                console.log("if called");
+                // console.log("if called");
                 toast.success("doctor verified");
-                window.location.reload(true)
+                axios.post("http://localhost:8080/afterdocverified", docstatus).then((res) => {
+
+                });
+                window.location.reload(true);
+
+
             }
             if (res.data.message === "no user") {
                 toast.error("no user found");
@@ -78,6 +87,60 @@ const Table = () => {
                 <div class="row">
                     <div class="col-12">
                         <div class="card my-4">
+                            < div class="container-fluid py-4" >
+                                <div class="row">
+                                    {/* <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                                <div class="card-header p-3 pt-2">
+                                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                                        <i class="material-icons opacity-10">weekend</i>
+                                    </div>
+                                    <div class="text-end pt-1">
+                                        <p class="text-sm mb-0 text-capitalize">Total Unverified Doctor</p>
+                                        <h4 class="mb-0">{doclist.length}</h4>
+                                    </div>
+                                </div>
+                                <hr class="dark horizontal my-0" />
+                                <div class="card-footer p-3">
+                                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last week</p>
+                                </div>
+                            </div>
+                        </div> */}
+                                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                                        <div class="card">
+                                            <div class="card-header p-3 pt-2">
+                                                <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                                                    <i class="material-icons opacity-10">person</i>
+                                                </div>
+                                                <div class="text-end pt-1">
+                                                    <p class="text-sm mb-0 text-capitalize">#Verified Doctors   </p>
+                                                    <h4 class="mb-0">{vdoclist.length}</h4>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                                        <div class="card">
+                                            <div class="card-header p-3 pt-2">
+                                                <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                                                    <i class="material-icons opacity-10">person</i>
+                                                </div>
+                                                <div class="text-end pt-1">
+                                                    <p class="text-sm mb-0 text-capitalize">#Unveridied Doctors</p>
+                                                    <h4 class="mb-0">{doclist.length}</h4>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div >
+                            <br></br>
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                 <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                                     <h6 class="text-white text-capitalize ps-3">Newly register Doctor</h6>
@@ -131,7 +194,7 @@ const Table = () => {
                                                                 </a> */}
 
                                                                 {/* <span onClick={getdocpdf} class="badge badge-sm bg-gradient-secondary" value={doc.email}>show pdf</span> */}
-                                                                <button onClick={getdocpdf} class="btn btn-dark" type="button" value={doc.email}>show pdf</button>
+                                                                <button onClick={getdocpdf} class="btn badge badge-sm btn-dark" type="button" value={doc.email}>show pdf</button>
 
 
                                                                 {/* <div class="col-5">
@@ -141,14 +204,14 @@ const Table = () => {
                                                             <td class="align-middle text-center text-sm">
 
 
-                                                                <button onClick={Changedocstatus} class="btn" value={doc.email} style={{ backgroundColor: "lightgreen", borderRadius: "20px", color: "black" }} type="button" >✔</button>
+                                                                <button onClick={Changedocstatus} class="btn badge badge-sm btn-success" value={doc.email} type="button" >✔</button>
 
 
                                                             </td>
                                                             <td class="align-middle text-center text-sm">
 
 
-                                                                <button onClick={Changedocstatus} class="btn" value={doc.email} style={{ backgroundColor: "red", borderRadius: "20px", color: "black" }} type="button" >✘</button>
+                                                                <button onClick={Changedocstatus} class="btn badge badge-sm btn-danger" value={doc.email} type="button" >✘</button>
 
 
                                                             </td>
@@ -160,148 +223,6 @@ const Table = () => {
 
 
                                             }
-
-
-                                            {/* <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user2" />
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                                                            <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">Programator</p>
-                                                    <p class="text-xs text-secondary mb-0">Developer</p>
-                                                </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">11/01/19</span>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <a href="/#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                        Edit
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user3" />
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                                                            <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">Executive</p>
-                                                    <p class="text-xs text-secondary mb-0">Projects</p>
-                                                </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="badge badge-sm bg-gradient-success">Online</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">19/09/17</span>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <a href="/#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                        Edit
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user4" />
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">Michael Levi</h6>
-                                                            <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">Programator</p>
-                                                    <p class="text-xs text-secondary mb-0">Developer</p>
-                                                </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="badge badge-sm bg-gradient-success">Online</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">24/12/08</span>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <a href="/#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                        Edit
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user5" />
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">Richard Gran</h6>
-                                                            <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">Manager</p>
-                                                    <p class="text-xs text-secondary mb-0">Executive</p>
-                                                </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">04/10/21</span>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <a href="/#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                        Edit
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user6" />
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                                                            <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">Programator</p>
-                                                    <p class="text-xs text-secondary mb-0">Developer</p>
-                                                </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <a href="/#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                        Edit
-                                                    </a>
-                                                </td>
-                                            </tr> */}
                                         </tbody>
                                     </table>
                                 </div>

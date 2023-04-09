@@ -23,14 +23,11 @@ function Header() {
                                     <a class="nav-link" href="/index" >Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/appointment">Book Doctor</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="/patientdashboard">Profile</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/VideoCall">Profile</a>
-                                </li>
+                                {/* <li class="nav-item">
+                                    <a class="nav-link" href="/VideoCall">Videocall</a>
+                                </li> */}
                                 {/* <li class="nav-item">
                                     <a class="nav-link" href="#specialties">Specialties</a>
                                 </li>
@@ -38,7 +35,7 @@ function Header() {
                                     <a class="nav-link" href="#faq">FAQ</a>
                                 </li> */}
                                 <li class="nav-item">
-                                    <a class="nav-link msp_5" style={{ backgroundColor: "blue", marginLeft: "400px" }} href="/docreg">I'm Doctor</a>
+                                    <a class="nav-link msp_5 position-absolute top-11 end-10" style={{ backgroundColor: "blue", }} href="/docreg">I'm Doctor</a>
                                 </li>
                             </ul>
                         </div>

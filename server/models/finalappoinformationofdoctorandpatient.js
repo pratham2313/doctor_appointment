@@ -12,6 +12,7 @@ var appoinformation = new mongoose.Schema({
     gender: String,
     date: String,
     slot: String,
+    slotnumber: String,
     appointmentstatus: String,
 });
 

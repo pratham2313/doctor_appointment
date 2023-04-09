@@ -1,7 +1,7 @@
 import React from 'react'
 import img1 from '../assets/img/images.png';
 
-function header_doc() {
+function Header_doc() {
     return (
         <div>
             <header>
@@ -20,7 +20,7 @@ function header_doc() {
                         <div class="collapse navbar-collapse" id="navbar-content">
                             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/index" >Home</a>
+                                    <a class="nav-link" href="/" >Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/appointment">Book Doctor</a>
@@ -35,7 +35,7 @@ function header_doc() {
                                     <a class="nav-link" href="#faq">FAQ</a>
                                 </li> */}
                                 <li class="nav-item">
-                                    <a class="nav-link msp_5" style={{ backgroundColor: "blue", marginLeft: "400px" }} href="/patientreg">I'm Patient</a>
+                                    <a class="nav-link msp_5 position-absolute top-11 end-10" style={{ backgroundColor: "blue" }} href="/patientreg">I'm Patient</a>
                                 </li>
                             </ul>
                         </div>
@@ -47,4 +47,4 @@ function header_doc() {
     )
 }
 
-export default header_doc
+export default Header_doc

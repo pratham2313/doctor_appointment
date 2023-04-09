@@ -8,6 +8,7 @@ var docreg = new mongoose.Schema({
     fullname: String,
     phonenumber: String,
     email: { type: String, unique: true },
+    password: String,
     specialty: String,
     role: String,
     filedoc: {

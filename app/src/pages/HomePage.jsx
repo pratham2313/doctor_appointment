@@ -14,18 +14,18 @@ const HomePage = () => {
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="download_app_btn download_app_btn_left">
-                            <a href="/patientreg" target="_self" style={{ textDecoration: "none" }} >I'm Patient</a>
+                            <a href="/patientlogin" target="_self" style={{ textDecoration: "none" }} >I'm Patient</a>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="download_app_btn download_app_btn_right doc_btn_brd">
-                            <a href="/docreg" target="_self" style={{ textDecoration: "none" }}>I'm Doctor</a>
+                            <a href="/doclogin" target="_self" style={{ textDecoration: "none" }}>I'm Doctor</a>
                         </div>
                     </div>
                 </div>
             </section>
             <div class="whatsapp-cta-container">
-                <a href="/dashmain" target="_blank" rel="noopener noreferrer" ><i style={{ fontSize: 30 }} class="fas fa-users"></i></a>
+                <a href="/adminlogin" target="_blank" rel="noopener noreferrer" >A</a>
             </div>
 
 
