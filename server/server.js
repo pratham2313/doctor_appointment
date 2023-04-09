@@ -17,20 +17,16 @@ const jwt = require('jsonwebtoken');
 const jwtkey = "naruto";
 mongoose.set("strictQuery", false);
 const bcrypt = require('bcrypt');
-
 const request = require('request');
-//mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
-//mongoose.connect('mongodb://localhost:27017/remotedoctorconsulting');
-const mongoUrl = "mongodb+srv://nill:nill4077@remotedoctorconsulting.z9hstsz.mongodb.net/remotedoctorconsulting?retryWrites=true&w=majority";
-
+require("dotenv").config();
 mongoose.set("strictQuery", false);
 
-mongoose.connect(mongoUrl, {
+mongoose.connect(process.env.mongoUrl, {
     useNewUrlParser: true
 }).then(() => { console.log("Connected to database"); })
     .catch(e => console.log(e));
 
-const conn = mongoose.createConnection(mongoUrl);
+const conn = mongoose.createConnection(process.env.mongoUrl);
 
 
 
@@ -43,6 +39,7 @@ const cors = require('cors');
 app.use(cors({
     origin: '*'
 }));
+
 
 // app.get('/', async (req, res) => {
 //     var docSpeciality = new docSpecialityModel({
@@ -1130,11 +1127,9 @@ app.post("/doclogin", async (req, res) => {
 
 //..................................server port..................................
 
-const port = 8080
+const PORT = 8080 || process.env.PORT
 const mode = "devlopment"
-
-
-app.listen(port, () => {
+app.listen(PORT, () => {
     //console.log(`server running successfully on ${mode} mode on port ${port}`);
 });
 
